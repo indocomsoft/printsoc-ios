@@ -10,6 +10,8 @@
 		34E8ED5581193900E6C593EE /* Pods_printsocTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936BE9AF3C7F9E870C2E7AFE /* Pods_printsocTests.framework */; };
 		5F4D2E54712688955788CE7B /* Pods_printsoc_printsocUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A896D86DD4ACF8F7CACA3E4F /* Pods_printsoc_printsocUITests.framework */; };
 		989FDFE7E3BAE2871CA7D606 /* Pods_printsoc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA5FF7801793F0B52187572 /* Pods_printsoc.framework */; };
+		C63522E323994158006C305E /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63522E223994158006C305E /* Account.swift */; };
+		C63522E523994243006C305E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63522E423994243006C305E /* AppState.swift */; };
 		C6398DD123992C3F00C836AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6398DD023992C3F00C836AC /* AppDelegate.swift */; };
 		C6398DD323992C3F00C836AC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6398DD223992C3F00C836AC /* SceneDelegate.swift */; };
 		C6398DD523992C3F00C836AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6398DD423992C3F00C836AC /* ContentView.swift */; };
@@ -48,6 +50,8 @@
 		A1E77E6D38BD619367E86547 /* Pods-printsoc-printsocUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc-printsocUITests.release.xcconfig"; path = "Target Support Files/Pods-printsoc-printsocUITests/Pods-printsoc-printsocUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A896D86DD4ACF8F7CACA3E4F /* Pods_printsoc_printsocUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_printsoc_printsocUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C63522E0239940B3006C305E /* printsoc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = printsoc.entitlements; sourceTree = "<group>"; };
+		C63522E223994158006C305E /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		C63522E423994243006C305E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C6398DCD23992C3F00C836AC /* printsoc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = printsoc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6398DD023992C3F00C836AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6398DD223992C3F00C836AC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +121,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C63522E12399414F006C305E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C63522E223994158006C305E /* Account.swift */,
+				C63522E423994243006C305E /* AppState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C6398DC423992C3F00C836AC = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +155,7 @@
 		C6398DCF23992C3F00C836AC /* printsoc */ = {
 			isa = PBXGroup;
 			children = (
+				C63522E12399414F006C305E /* Models */,
 				C63522E0239940B3006C305E /* printsoc.entitlements */,
 				C692EA272399363D005512DA /* Views */,
 				C6398DD023992C3F00C836AC /* AppDelegate.swift */,
@@ -464,10 +478,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C63522E323994158006C305E /* Account.swift in Sources */,
 				C6398DD123992C3F00C836AC /* AppDelegate.swift in Sources */,
 				C6398DD323992C3F00C836AC /* SceneDelegate.swift in Sources */,
 				C6398DD523992C3F00C836AC /* ContentView.swift in Sources */,
 				C692EA2623993631005512DA /* Login.swift in Sources */,
+				C63522E523994243006C305E /* AppState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,9 +9,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var state: AppState
+
     var body: some View {
         NavigationView {
-            Login()
+            if state.loggedIn {
+                Text("Logged in, username = \(state.getAccount()?.username ?? "nil")")
+            } else {
+                Login().environmentObject(state)
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

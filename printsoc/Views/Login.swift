@@ -10,6 +10,8 @@ import NMSSH
 import SwiftUI
 
 struct Login: View {
+    @EnvironmentObject var state: AppState
+
     @State private var username = ""
     @State private var password = ""
 
@@ -23,7 +25,7 @@ struct Login: View {
             SecureField("Password", text: $password)
                 .padding()
             Button("Log in") {
-                self.onTapLoginButton()
+                self.login()
             }
             .alert(isPresented: $showErrorAlert) {
                 Alert(title: Text("Error"), message: Text(reason),
@@ -36,7 +38,7 @@ struct Login: View {
         .navigationBarTitle("Login to sunfire")
     }
 
-    func onTapLoginButton() {
+    func login() {
         let session = NMSSHSession
             .connect(toHost: "sunfire.comp.nus.edu.sg", withUsername: username)
         guard session.isConnected else {
@@ -50,6 +52,8 @@ struct Login: View {
             showErrorAlert = true
             return
         }
+        let account = Account(username: username, password: password)
+        state.storeAccount(account)
     }
 }
 

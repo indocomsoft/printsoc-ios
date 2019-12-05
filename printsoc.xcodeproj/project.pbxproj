@@ -47,6 +47,7 @@
 		9FDFBB186CB189609BF81933 /* Pods-printsocTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsocTests.release.xcconfig"; path = "Target Support Files/Pods-printsocTests/Pods-printsocTests.release.xcconfig"; sourceTree = "<group>"; };
 		A1E77E6D38BD619367E86547 /* Pods-printsoc-printsocUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc-printsocUITests.release.xcconfig"; path = "Target Support Files/Pods-printsoc-printsocUITests/Pods-printsoc-printsocUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A896D86DD4ACF8F7CACA3E4F /* Pods_printsoc_printsocUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_printsoc_printsocUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C63522E0239940B3006C305E /* printsoc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = printsoc.entitlements; sourceTree = "<group>"; };
 		C6398DCD23992C3F00C836AC /* printsoc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = printsoc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6398DD023992C3F00C836AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6398DD223992C3F00C836AC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 		C6398DCF23992C3F00C836AC /* printsoc */ = {
 			isa = PBXGroup;
 			children = (
+				C63522E0239940B3006C305E /* printsoc.entitlements */,
 				C692EA272399363D005512DA /* Views */,
 				C6398DD023992C3F00C836AC /* AppDelegate.swift */,
 				C6398DD223992C3F00C836AC /* SceneDelegate.swift */,
@@ -195,8 +197,8 @@
 			buildConfigurationList = C6398DF723992C4200C836AC /* Build configuration list for PBXNativeTarget "printsoc" */;
 			buildPhases = (
 				F9B8BE2F5AC104342958C1D7 /* [CP] Check Pods Manifest.lock */,
-				C692EA2423993154005512DA /* ShellScript */,
 				C692EA23239930A1005512DA /* ShellScript */,
+				C692EA2423993154005512DA /* ShellScript */,
 				C6398DC923992C3F00C836AC /* Sources */,
 				C6398DCA23992C3F00C836AC /* Frameworks */,
 				C6398DCB23992C3F00C836AC /* Resources */,
@@ -631,6 +633,7 @@
 			baseConfigurationReference = 82FEE29C25F2DD212B82D79E /* Pods-printsoc.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = printsoc/printsoc.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"printsoc/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C688DY2VC;
@@ -652,6 +655,7 @@
 			baseConfigurationReference = D12BFB1D031F14949DC4BC3D /* Pods-printsoc.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = printsoc/printsoc.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"printsoc/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C688DY2VC;

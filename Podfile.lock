@@ -1,24 +1,28 @@
 PODS:
+  - Locksmith (4.0.0)
   - NMSSH (2.3.1)
   - SwiftFormat/CLI (0.42.0)
   - SwiftLint (0.38.0)
 
 DEPENDENCIES:
+  - Locksmith
   - NMSSH
   - SwiftFormat/CLI
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Locksmith
     - NMSSH
     - SwiftFormat
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   NMSSH: cd689ae535a1581a6dd9fd4600ff71247df510a6
   SwiftFormat: 5faa819600268dfaa5c19f1359730883db151678
   SwiftLint: 4105f061f9812b214568b736dab580ab2c73a582
 
-PODFILE CHECKSUM: 873e39ff75a551d5a74c1a7efe402166305efa4d
+PODFILE CHECKSUM: 7d3ddd34db6e2b2142a9f4eb796846a68bd2e70d
 
 COCOAPODS: 1.8.4

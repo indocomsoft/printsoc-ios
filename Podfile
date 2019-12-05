@@ -10,6 +10,7 @@ target 'printsoc' do
   pod 'SwiftFormat/CLI'
 
   pod 'NMSSH'
+  pod 'Locksmith'
 
   target 'printsocTests' do
     inherit! :search_paths

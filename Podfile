@@ -9,6 +9,8 @@ target 'printsoc' do
   pod 'SwiftLint'
   pod 'SwiftFormat/CLI'
 
+  pod 'NMSSH'
+
   target 'printsocTests' do
     inherit! :search_paths
     # Pods for testing

@@ -22,18 +22,14 @@ final class AppState: ObservableObject {
         UserDefaults.standard.string(forKey: key)
     }
 
-    private func storeUsername(_ username: String) {
-        UserDefaults.standard.set(username, forKey: key)
-        loggedIn = true
-    }
-
     func storeAccount(_ account: Account) {
         do {
             try account.createInSecureStore()
         } catch {
             fatalError("Unable to save credentials to keychain")
         }
-        storeUsername(account.username)
+        UserDefaults.standard.set(account.username, forKey: key)
+        loggedIn = true
     }
 
     func getAccount() -> Account? {
@@ -43,5 +39,18 @@ final class AppState: ObservableObject {
             return nil
         }
         return Account(username: username, password: password)
+    }
+
+    func deleteAccount() {
+        guard let username = getUsername() else {
+            return
+        }
+        UserDefaults.standard.removeObject(forKey: key)
+        do {
+            try Account(username: username, password: "").deleteFromSecureStore()
+        } catch {
+            fatalError("Unable to delete credentials from keychain")
+        }
+        loggedIn = false
     }
 }

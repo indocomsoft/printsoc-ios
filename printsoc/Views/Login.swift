@@ -21,9 +21,7 @@ struct Login: View {
     var body: some View {
         Form {
             TextField("SoC username", text: $username)
-                .padding()
             SecureField("Password", text: $password)
-                .padding()
             Button("Log in") {
                 self.login()
             }
@@ -33,7 +31,6 @@ struct Login: View {
                           self.showErrorAlert = false
                 })
             }
-            .padding()
         }
         .navigationBarTitle("Login to sunfire")
     }

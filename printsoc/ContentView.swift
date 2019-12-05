@@ -14,7 +14,15 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if state.loggedIn {
-                Text("Logged in, username = \(state.getAccount()?.username ?? "nil")")
+                VStack {
+                    Text("Logged in, username = \(state.getAccount()?.username ?? "nil")")
+                        .padding()
+                    Button("Log out") {
+                        self.state.deleteAccount()
+                    }
+                    .padding()
+                }
+                .navigationBarTitle("Home")
             } else {
                 Login().environmentObject(state)
             }

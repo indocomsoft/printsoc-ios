@@ -101,7 +101,6 @@
 				8A88A8D8E9CF5D0489BF8066 /* Pods-printsocTests.debug.xcconfig */,
 				9FDFBB186CB189609BF81933 /* Pods-printsocTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -185,6 +184,8 @@
 			buildConfigurationList = C6398DF723992C4200C836AC /* Build configuration list for PBXNativeTarget "printsoc" */;
 			buildPhases = (
 				F9B8BE2F5AC104342958C1D7 /* [CP] Check Pods Manifest.lock */,
+				C692EA2423993154005512DA /* ShellScript */,
+				C692EA23239930A1005512DA /* ShellScript */,
 				C6398DC923992C3F00C836AC /* Sources */,
 				C6398DCA23992C3F00C836AC /* Frameworks */,
 				C6398DCB23992C3F00C836AC /* Resources */,
@@ -350,6 +351,40 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C692EA23239930A1005512DA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" .\n";
+		};
+		C692EA2423993154005512DA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		F9B8BE2F5AC104342958C1D7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

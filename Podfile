@@ -6,6 +6,8 @@ target 'printsoc' do
   use_frameworks!
 
   # Pods for printsoc
+  pod 'SwiftLint'
+  pod 'SwiftFormat/CLI'
 
   target 'printsocTests' do
     inherit! :search_paths

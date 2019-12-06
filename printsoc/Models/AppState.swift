@@ -51,27 +51,39 @@ final class AppState: ObservableObject {
             guard let self = self else {
                 return
             }
-            let session = NMSSHSession.connect(toHost: Constants.host, withUsername: username)
-            guard session.isConnected else {
-                DispatchQueue.main.async { onCompletion(.failure(.noConnection)) }
-                return
-            }
-            session.authenticate(byPassword: password)
-            guard session.isAuthorized else {
-                DispatchQueue.main.async { onCompletion(.failure(.unauthorized)) }
-                return
-            }
-            let account = Account(username: username, password: password)
-            do {
-                try account.createInSecureStore()
-            } catch {
-                fatalError("Unable to save credentials to keychain")
-            }
-            UserDefaults.standard.set(account.username, forKey: Constants.userDefaultsKey)
-            DispatchQueue.main.async { [weak self] in
-                self?.loggedIn = true
-                onCompletion(.success(account))
+            switch self.authenticate(username: username, password: password) {
+            case .success:
+                let account = Account(username: username, password: password)
+                UserDefaults.standard.set(account.username, forKey: Constants.userDefaultsKey)
+                do {
+                    try account.createInSecureStore()
+                } catch {
+                    fatalError("Unable to save credentials to keychain")
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.loggedIn = true
+                    onCompletion(.success(account))
+                }
+            case let .failure(error):
+                DispatchQueue.main.async { onCompletion(.failure(error)) }
             }
         }
+    }
+
+    func authenticate(account: Account) -> Result<NMSSHSession, TransportError> {
+        authenticate(username: account.username, password: account.password)
+    }
+
+    func authenticate(username: String, password: String) -> Result<NMSSHSession,
+                                                                    TransportError> {
+        let session = NMSSHSession.connect(toHost: Constants.host, withUsername: username)
+        guard session.isConnected else {
+            return .failure(.noConnection)
+        }
+        session.authenticate(byPassword: password)
+        guard session.isAuthorized else {
+            return .failure(.unauthorized)
+        }
+        return .success(session)
     }
 }

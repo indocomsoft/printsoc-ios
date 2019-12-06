@@ -24,6 +24,7 @@
 		C6398DF323992C4200C836AC /* printsocUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6398DF223992C4200C836AC /* printsocUITests.swift */; };
 		C6928F85239A234700C4242F /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6928F84239A234700C4242F /* ActivityIndicator.swift */; };
 		C6928F89239A30FD00C4242F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6928F88239A30FD00C4242F /* Home.swift */; };
+		C6928F8B239A353500C4242F /* PaperUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6928F8A239A353500C4242F /* PaperUsage.swift */; };
 		C692EA2623993631005512DA /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = C692EA2523993631005512DA /* Login.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		C6398DF423992C4200C836AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6928F84239A234700C4242F /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C6928F88239A30FD00C4242F /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		C6928F8A239A353500C4242F /* PaperUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperUsage.swift; sourceTree = "<group>"; };
 		C692EA2523993631005512DA /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		D12BFB1D031F14949DC4BC3D /* Pods-printsoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc.release.xcconfig"; path = "Target Support Files/Pods-printsoc/Pods-printsoc.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,6 +138,7 @@
 				C63522E423994243006C305E /* AppState.swift */,
 				C63522E9239A15AC006C305E /* TransportError.swift */,
 				C63522EB239A1602006C305E /* Constants.swift */,
+				C6928F8A239A353500C4242F /* PaperUsage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				C6398DD323992C3F00C836AC /* SceneDelegate.swift in Sources */,
 				C63522EC239A1602006C305E /* Constants.swift in Sources */,
 				C6398DD523992C3F00C836AC /* ContentView.swift in Sources */,
+				C6928F8B239A353500C4242F /* PaperUsage.swift in Sources */,
 				C63522EA239A15AC006C305E /* TransportError.swift in Sources */,
 				C692EA2623993631005512DA /* Login.swift in Sources */,
 				C6928F85239A234700C4242F /* ActivityIndicator.swift in Sources */,

@@ -11,16 +11,13 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var state: AppState
 
+    @ViewBuilder
     var body: some View {
-        NavigationView {
-            if state.loggedIn {
-                Home()
-                    .environmentObject(state)
-            } else {
-                Login().environmentObject(state)
-            }
+        if state.loggedIn {
+            Home().environmentObject(state)
+        } else {
+            Login().environmentObject(state)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

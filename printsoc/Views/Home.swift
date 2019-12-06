@@ -12,15 +12,18 @@ struct Home: View {
     @EnvironmentObject var state: AppState
 
     var body: some View {
-        VStack {
-            Text("Logged in, username = \(state.getAccount()?.username ?? "nil")")
-                .padding()
-            Button("Log out") {
-                self.state.deleteAccount()
+        NavigationView {
+            VStack {
+                Text("Logged in, username = \(state.getAccount()?.username ?? "nil")")
+                    .padding()
+                Text("BW quota: \(PaperUsage.get(from: state)?.bwPaperQuota ?? -1)")
             }
-            .padding()
-        }
-        .navigationBarTitle("Home")
+            .navigationBarTitle("Home")
+            .navigationBarItems(trailing:
+                Button(action: state.deleteAccount, label: {
+                    Text("Log Out")
+            }))
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

@@ -35,7 +35,7 @@ struct Login: View {
     }
 
     var body: some View {
-        VStack {
+        NavigationView {
             if isLoading {
                 form.overlay(
                     ActivityIndicator(isAnimating: $isLoading, style: .large)
@@ -48,7 +48,7 @@ struct Login: View {
             } else {
                 form
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 
     private func login() {
@@ -67,8 +67,6 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            Login()
-        }.navigationViewStyle(StackNavigationViewStyle())
+        Login()
     }
 }

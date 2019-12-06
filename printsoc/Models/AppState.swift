@@ -43,6 +43,8 @@ final class AppState: ObservableObject {
         loggedIn = false
     }
 
+    /// Asynchronously try to authenticate the given credential, and store it if successful.
+    /// Upon completion, it will invoke onCompletion on the main thread
     func storeAccount(username: String, password: String,
                       onCompletion: @escaping (Result<Account, TransportError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in

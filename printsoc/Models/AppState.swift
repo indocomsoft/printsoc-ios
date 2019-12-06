@@ -70,12 +70,8 @@ final class AppState: ObservableObject {
         }
     }
 
-    func authenticate(account: Account) -> Result<NMSSHSession, TransportError> {
-        authenticate(username: account.username, password: account.password)
-    }
-
-    func authenticate(username: String, password: String) -> Result<NMSSHSession,
-                                                                    TransportError> {
+    private func authenticate(username: String, password: String) -> Result<NMSSHSession,
+                                                                            TransportError> {
         let session = NMSSHSession.connect(toHost: Constants.host, withUsername: username)
         guard session.isConnected else {
             return .failure(.noConnection)
@@ -85,5 +81,25 @@ final class AppState: ObservableObject {
             return .failure(.unauthorized)
         }
         return .success(session)
+    }
+
+    func authenticate() -> NMSSHSession? {
+        guard let account = getAccount() else {
+            return nil
+        }
+        switch authenticate(username: account.username, password: account.password) {
+        case .failure: return nil
+        case let .success(session): return session
+        }
+    }
+
+    func getFullName() -> String? {
+        guard let session = authenticate() else {
+            return nil
+        }
+        return session.channel
+            .execute("getent passwd julius | cut -d ':' -f 5", error: nil, timeout: 5)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .capitalized
     }
 }

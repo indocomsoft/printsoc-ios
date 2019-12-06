@@ -11,12 +11,30 @@ import SwiftUI
 struct Home: View {
     @EnvironmentObject var state: AppState
 
+    var usageView: PrintUsageView? {
+        guard let usage = PaperUsage.get(from: state) else {
+            return nil
+        }
+        return PrintUsageView(usage: usage)
+    }
+
+    var greeting: String {
+        guard let name = state.getFullName() else {
+            return "Hi!"
+        }
+        return "Hi \(name)!"
+    }
+
     var body: some View {
         NavigationView {
             VStack {
-                Text("Logged in, username = \(state.getAccount()?.username ?? "nil")")
+                Text(greeting)
                     .padding()
-                Text("BW quota: \(PaperUsage.get(from: state)?.bwPaperQuota ?? -1)")
+                if usageView == nil {
+                    Text("Quota not available")
+                } else {
+                    usageView
+                }
             }
             .navigationBarTitle("Home")
             .navigationBarItems(trailing:

@@ -43,18 +43,14 @@ struct PaperUsage {
     }
 
     static func get(from appState: AppState) -> PaperUsage? {
-        guard let account = appState.getAccount() else {
+        guard let session = appState.authenticate() else {
             return nil
         }
-        switch appState.authenticate(account: account) {
-        case .failure: return nil
-        case let .success(session):
-            var error: NSError?
-            session.channel.requestPty = true
-            guard let result = session.channel.execute("/usr/local/bin/pusage", error: &error, timeout: 5) else {
-                return nil
-            }
-            return PaperUsage(pusageOutput: result)
+        session.channel.requestPty = true
+        guard let result = session.channel.execute("/usr/local/bin/pusage", error: nil, timeout: 5)
+        else {
+            return nil
         }
+        return PaperUsage(pusageOutput: result)
     }
 }

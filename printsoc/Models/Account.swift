@@ -11,8 +11,6 @@ import Locksmith
 
 struct Account: CreateableSecureStorable, ReadableSecureStorable, DeleteableSecureStorable,
     GenericPasswordSecureStorable {
-    static let dataKey = "password"
-
     let username: String
     let password: String
 
@@ -20,6 +18,6 @@ struct Account: CreateableSecureStorable, ReadableSecureStorable, DeleteableSecu
     var account: String { username }
 
     var data: [String: Any] {
-        [Account.dataKey: password]
+        [Constants.keychainDataKey: password]
     }
 }

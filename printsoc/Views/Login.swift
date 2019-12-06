@@ -10,7 +10,7 @@ import NMSSH
 import SwiftUI
 
 struct Login: View {
-    @EnvironmentObject var state: AppState
+    @EnvironmentObject private var state: AppState
 
     @State private var username = ""
     @State private var password = ""
@@ -18,44 +18,57 @@ struct Login: View {
     @State private var reason = ""
     @State private var showErrorAlert = false
 
-    var body: some View {
+    @State private var isLoading = false
+
+    private var form: some View {
         Form {
-            TextField("SoC username", text: $username)
-            SecureField("Password", text: $password)
-            Button("Log in") {
-                self.login()
-            }
-            .alert(isPresented: $showErrorAlert) {
-                Alert(title: Text("Error"), message: Text(reason),
-                      dismissButton: .default(Text("Ok")) {
-                          self.showErrorAlert = false
-                })
-            }
+            TextField("SoC username", text: self.$username)
+            SecureField("Password", text: self.$password)
+            Button(action: self.login, label: {
+                Text("Log in")
+            })
+                .alert(isPresented: self.$showErrorAlert) {
+                    Alert(title: Text("Error"), message: Text(self.reason))
+                }
         }
-        .navigationBarTitle("Login to sunfire")
+        .navigationBarTitle("Login to Sunfire")
     }
 
-    func login() {
-        let session = NMSSHSession
-            .connect(toHost: "sunfire.comp.nus.edu.sg", withUsername: username)
-        guard session.isConnected else {
-            reason = "Unable to connect to sunfire"
-            showErrorAlert = true
-            return
+    var body: some View {
+        VStack {
+            if isLoading {
+                form.overlay(
+                    ActivityIndicator(isAnimating: $isLoading, style: .large)
+                        .frame(width: 100, height: 100)
+                        .background(Color.secondary)
+                        .foregroundColor(.primary)
+                        .cornerRadius(20)
+                        .opacity(0.5)
+                )
+            } else {
+                form
+            }
         }
-        session.authenticate(byPassword: password)
-        guard session.isAuthorized else {
-            reason = "Unauthorized"
-            showErrorAlert = true
-            return
+    }
+
+    private func login() {
+        isLoading = true
+        state.storeAccount(username: username, password: password) { result in
+            switch result {
+            case let .failure(error):
+                self.showErrorAlert = true
+                self.reason = error.message
+            case .success: break
+            }
+            self.isLoading = false
         }
-        let account = Account(username: username, password: password)
-        state.storeAccount(account)
     }
 }
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+        NavigationView {
+            Login()
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }

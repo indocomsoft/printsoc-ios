@@ -14,15 +14,8 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if state.loggedIn {
-                VStack {
-                    Text("Logged in, username = \(state.getAccount()?.username ?? "nil")")
-                        .padding()
-                    Button("Log out") {
-                        self.state.deleteAccount()
-                    }
-                    .padding()
-                }
-                .navigationBarTitle("Home")
+                Home()
+                    .environmentObject(state)
             } else {
                 Login().environmentObject(state)
             }
@@ -33,6 +26,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(AppState())
     }
 }

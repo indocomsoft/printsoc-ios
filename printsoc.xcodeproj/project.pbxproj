@@ -23,6 +23,7 @@
 		C6398DE823992C4200C836AC /* printsocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6398DE723992C4200C836AC /* printsocTests.swift */; };
 		C6398DF323992C4200C836AC /* printsocUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6398DF223992C4200C836AC /* printsocUITests.swift */; };
 		C6928F85239A234700C4242F /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6928F84239A234700C4242F /* ActivityIndicator.swift */; };
+		C6928F89239A30FD00C4242F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6928F88239A30FD00C4242F /* Home.swift */; };
 		C692EA2623993631005512DA /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = C692EA2523993631005512DA /* Login.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		C6398DF223992C4200C836AC /* printsocUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = printsocUITests.swift; sourceTree = "<group>"; };
 		C6398DF423992C4200C836AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6928F84239A234700C4242F /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		C6928F88239A30FD00C4242F /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		C692EA2523993631005512DA /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		D12BFB1D031F14949DC4BC3D /* Pods-printsoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc.release.xcconfig"; path = "Target Support Files/Pods-printsoc/Pods-printsoc.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,6 +210,7 @@
 			children = (
 				C692EA2523993631005512DA /* Login.swift */,
 				C6928F84239A234700C4242F /* ActivityIndicator.swift */,
+				C6928F88239A30FD00C4242F /* Home.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 			files = (
 				C63522E323994158006C305E /* Account.swift in Sources */,
 				C6398DD123992C3F00C836AC /* AppDelegate.swift in Sources */,
+				C6928F89239A30FD00C4242F /* Home.swift in Sources */,
 				C6398DD323992C3F00C836AC /* SceneDelegate.swift in Sources */,
 				C63522EC239A1602006C305E /* Constants.swift in Sources */,
 				C6398DD523992C3F00C836AC /* ContentView.swift in Sources */,

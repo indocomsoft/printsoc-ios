@@ -8,6 +8,7 @@
 
 import Combine
 import Foundation
+import Locksmith
 import NMSSH
 
 enum AppStateError: Error {
@@ -148,7 +149,12 @@ final class AppState: ObservableObject {
                 do {
                     try Account.save(username: username, password: password)
                 } catch {
-                    return Fail(error: AppStateError.keychainError).eraseToAnyPublisher()
+                    switch error {
+                    case LocksmithError.duplicate:
+                        return self.deleteAccount()
+                    default:
+                        return Fail(error: AppStateError.keychainError).eraseToAnyPublisher()
+                    }
                 }
                 UserDefaults.standard.set(username, forKey: self.userDefaultsKey)
                 return self.update().eraseToAnyPublisher()

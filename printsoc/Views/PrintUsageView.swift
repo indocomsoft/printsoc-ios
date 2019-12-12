@@ -9,27 +9,26 @@
 import SwiftUI
 
 struct PrintUsageView: View {
-    var usage: PaperUsage
-
-    private var bwTotal: CGFloat {
-        CGFloat(usage.bwPaperQuota + usage.bwPaperUsage)
-    }
-
-    private var bwQuotaWidth: CGFloat {
-        CGFloat(usage.bwPaperQuota) / bwTotal
-    }
-
-    private var bwUsageWidth: CGFloat {
-        CGFloat(usage.bwPaperUsage) / bwTotal
-    }
+    var usage: PaperUsage?
 
     var body: some View {
-        List {
-            PrintUsageSectionView(header: "B/W", quota: usage.bwPaperQuota,
-                                  usage: usage.bwPaperUsage)
-            PrintUsageSectionView(header: "Color", quota: usage.colorPaperQuota,
-                                  usage: usage.colorPaperUsage)
-        }.listStyle(GroupedListStyle())
+        VStack {
+            if usage == nil {
+                VStack {
+                    Text("Quota information not available")
+                }
+            }
+            if usage != nil {
+                self.usage.map { usage in
+                    List {
+                        PrintUsageSectionView(header: "B/W", quota: usage.bwPaperQuota,
+                                              usage: usage.bwPaperUsage)
+                        PrintUsageSectionView(header: "Color", quota: usage.colorPaperQuota,
+                                              usage: usage.colorPaperUsage)
+                    }.listStyle(GroupedListStyle())
+                }
+            }
+        }
     }
 }
 
@@ -46,7 +45,10 @@ struct PrintUsageView_Previews: PreviewProvider {
             https://mysoc.nus.edu.sg/~eprint/forms
     """
     static var previews: some View {
-        PrintUsageView(usage: PaperUsage(pusageOutput: pusageOutput)!)
-            .frame(height: 500)
+        VStack {
+            PrintUsageView(usage: nil)
+            PrintUsageView(usage: PaperUsage(pusageOutput: pusageOutput)!)
+            Spacer()
+        }
     }
 }

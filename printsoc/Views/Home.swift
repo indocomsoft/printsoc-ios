@@ -6,20 +6,20 @@
 //  Copyright © 2019 Julius. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
 struct Home: View {
+    @State var cancellables = Set<AnyCancellable>()
+
     @EnvironmentObject var state: AppState
 
-    var usageView: PrintUsageView? {
-        guard let usage = PaperUsage.get(from: state) else {
-            return nil
-        }
-        return PrintUsageView(usage: usage)
+    var usage: PaperUsage? {
+        state.data?.usage
     }
 
     var greeting: String {
-        guard let name = state.getFullName() else {
+        guard let name = state.data?.fullName else {
             return "Hi!"
         }
         return "Hi \(name)!"
@@ -30,18 +30,37 @@ struct Home: View {
             VStack {
                 Text(greeting)
                     .padding()
-                if usageView == nil {
-                    Text("Quota not available")
-                } else {
-                    usageView
-                }
+                PrintUsageView(usage: self.usage)
             }
             .navigationBarTitle("Home")
             .navigationBarItems(trailing:
-                Button(action: state.deleteAccount, label: {
-                    Text("Log Out")
-            }))
-        }.navigationViewStyle(StackNavigationViewStyle())
+                HStack(alignment: VerticalAlignment.center) {
+                    Button(action: self.refresh, label: {
+                        Image(uiImage: UIImage(systemName: "arrow.clockwise")!)
+                    })
+                    Divider()
+                    Button(action: self.deleteAccount, label: {
+                        Text("Log Out")
+                    })
+            })
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+//        .onAppear {
+//            self.refresh()
+//        }
+    }
+
+    private func refresh() {
+        state.update()
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: {})
+            .store(in: &cancellables)
+    }
+
+    func deleteAccount() {
+        state.deleteAccount()
+            .sink(receiveCompletion: { _ in }, receiveValue: {})
+            .store(in: &cancellables)
     }
 }
 

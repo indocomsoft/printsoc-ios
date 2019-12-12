@@ -10,96 +10,149 @@ import Combine
 import Foundation
 import NMSSH
 
+enum AppStateError: Error {
+    case transportError(TransportError)
+    case transportSessionError(TransportSessionError)
+    case parsingError(field: String)
+    case keychainError
+    case strongReference
+
+    var message: String {
+        switch self {
+        case let .transportError(error): return error.message
+        case let .transportSessionError(error): return "Transport session error: \(error.message)"
+        case let .parsingError(field): return "Unable to parse for field \(field)"
+        case .keychainError: return "Unable to perform keychain operation"
+        case .strongReference: return "Unable to obtain strong reference"
+        }
+    }
+}
+
 final class AppState: ObservableObject {
-    @Published var loggedIn: Bool = false
+    @Published var isLoggedIn: Bool = false
+    @Published var data: Data?
+
+    private var cancellables = Set<AnyCancellable>()
+
+    private let userDefaultsKey = "username"
+
+    private var savedUsername: String? {
+        UserDefaults.standard.string(forKey: userDefaultsKey)
+    }
+
+    private var savedPassword: String? {
+        guard let username = savedUsername else {
+            return nil
+        }
+        return Account.password(for: username)
+    }
+
+    var transportSession: AnyPublisher<DefaultTransport.Session, AppStateError> {
+        guard let username = savedUsername, let password = savedPassword else {
+            return Fail(error: TransportError.unauthorized)
+                .mapError { .transportError($0) }
+                .eraseToAnyPublisher()
+        }
+        return DefaultTransport.authenticate(username: username, password: password)
+            .mapError { .transportError($0) }
+            .eraseToAnyPublisher()
+    }
 
     init() {
-        loggedIn = getAccount() != nil
+        update()
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+            .store(in: &cancellables)
     }
 
-    private func getUsername() -> String? {
-        UserDefaults.standard.string(forKey: Constants.userDefaultsKey)
-    }
-
-    func getAccount() -> Account? {
-        guard let username = getUsername(),
-            let result = Account(username: username, password: "").readFromSecureStore(),
-            let password = result.data?[Constants.keychainDataKey] as? String else {
-            return nil
-        }
-        return Account(username: username, password: password)
-    }
-
-    func deleteAccount() {
-        guard let username = getUsername() else {
-            return
-        }
-        UserDefaults.standard.removeObject(forKey: Constants.userDefaultsKey)
-        do {
-            try Account(username: username, password: "").deleteFromSecureStore()
-        } catch {
-            fatalError("Unable to delete credentials from keychain")
-        }
-        loggedIn = false
-    }
-
-    /// Asynchronously try to authenticate the given credential, and store it if successful.
-    /// Upon completion, it will invoke onCompletion on the main thread
-    func storeAccount(username: String, password: String,
-                      onCompletion: @escaping (Result<Account, TransportError>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else {
-                return
+    func update() -> AnyPublisher<Void, AppStateError> {
+        Just(savedUsername)
+            .setFailureType(to: AppStateError.self)
+            .receive(on: DispatchQueue.main)
+            .flatMap { [weak self] maybeUsername -> AnyPublisher<String, AppStateError> in
+                self?.isLoggedIn = maybeUsername != nil
+                guard let username = maybeUsername else {
+                    return Fail(error: AppStateError.transportError(.unauthorized))
+                        .eraseToAnyPublisher()
+                }
+                return Just(username)
+                    .setFailureType(to: AppStateError.self)
+                    .eraseToAnyPublisher()
             }
-            switch self.authenticate(username: username, password: password) {
-            case .success:
-                let account = Account(username: username, password: password)
-                UserDefaults.standard.set(account.username, forKey: Constants.userDefaultsKey)
+            .flatMap { [weak self] _ -> AnyPublisher<Data, AppStateError> in
+                guard let self = self else {
+                    return Fail(error: AppStateError.strongReference).eraseToAnyPublisher()
+                }
+                guard let username = self.savedUsername else {
+                    return Fail(error: AppStateError.transportError(.unauthorized))
+                        .eraseToAnyPublisher()
+                }
+                return self.transportSession
+                    .flatMap { session in
+                        session.getFullName(for: username)
+                            .zip(session.getPaperUsage())
+                            .mapError { AppStateError.transportSessionError($0) }
+                            .map { name, pusage in Data(fullName: name, usage: pusage) }
+                    }
+                    .eraseToAnyPublisher()
+            }
+            .receive(on: DispatchQueue.main)
+            .flatMap { [weak self] data -> AnyPublisher<Void, AppStateError> in
+                guard let self = self else {
+                    return Fail(error: AppStateError.strongReference)
+                        .eraseToAnyPublisher()
+                }
+                self.data = data
+                return Just(())
+                    .setFailureType(to: AppStateError.self)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+
+    func deleteAccount() -> AnyPublisher<Void, AppStateError> {
+        Deferred {
+            Future<Void, AppStateError> { [weak self] promise in
+                guard let self = self,
+                    let username = self.savedUsername
+                else {
+                    return promise(.failure(AppStateError.strongReference))
+                }
                 do {
-                    try account.createInSecureStore()
+                    try Account.delete(username: username)
                 } catch {
-                    fatalError("Unable to save credentials to keychain")
+                    return promise(.failure(AppStateError.keychainError))
                 }
-                DispatchQueue.main.async { [weak self] in
-                    self?.loggedIn = true
-                    onCompletion(.success(account))
-                }
-            case let .failure(error):
-                DispatchQueue.main.async { onCompletion(.failure(error)) }
+                UserDefaults.standard.removeObject(forKey: self.userDefaultsKey)
+                return promise(.success(()))
             }
         }
+        .flatMap { [weak self] _ -> AnyPublisher<Void, AppStateError> in
+            guard let self = self else {
+                return Fail(error: AppStateError.strongReference).eraseToAnyPublisher()
+            }
+            return self.update().eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 
-    private func authenticate(username: String, password: String) -> Result<NMSSHSession,
-                                                                            TransportError> {
-        let session = NMSSHSession.connect(toHost: Constants.host, withUsername: username)
-        guard session.isConnected else {
-            return .failure(.noConnection)
-        }
-        session.authenticate(byPassword: password)
-        guard session.isAuthorized else {
-            return .failure(.unauthorized)
-        }
-        return .success(session)
-    }
-
-    func authenticate() -> NMSSHSession? {
-        guard let account = getAccount() else {
-            return nil
-        }
-        switch authenticate(username: account.username, password: account.password) {
-        case .failure: return nil
-        case let .success(session): return session
-        }
-    }
-
-    func getFullName() -> String? {
-        guard let session = authenticate() else {
-            return nil
-        }
-        return session.channel
-            .execute("getent passwd julius | cut -d ':' -f 5", error: nil, timeout: 5)?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .capitalized
+    func storeAccount(username: String, password: String) -> AnyPublisher<Void, AppStateError> {
+        DefaultTransport
+            .authenticate(username: username, password: password)
+            .mapError {
+                AppStateError.transportError($0)
+            }
+            .flatMap { [weak self] _ -> AnyPublisher<Void, AppStateError> in
+                guard let self = self else {
+                    return Fail(error: AppStateError.strongReference).eraseToAnyPublisher()
+                }
+                do {
+                    try Account.save(username: username, password: password)
+                } catch {
+                    return Fail(error: AppStateError.keychainError).eraseToAnyPublisher()
+                }
+                UserDefaults.standard.set(username, forKey: self.userDefaultsKey)
+                return self.update().eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }

@@ -6,10 +6,12 @@
 //  Copyright © 2019 Julius. All rights reserved.
 //
 
-import NMSSH
+import Combine
 import SwiftUI
 
 struct Login: View {
+    @State private var cancellables = Set<AnyCancellable>()
+
     @EnvironmentObject private var state: AppState
 
     @State private var username = ""
@@ -53,15 +55,23 @@ struct Login: View {
 
     private func login() {
         isLoading = true
-        state.storeAccount(username: username, password: password) { result in
-            switch result {
-            case let .failure(error):
-                self.showErrorAlert = true
-                self.reason = error.message
-            case .success: break
-            }
-            self.isLoading = false
-        }
+        state.storeAccount(username: username, password: password)
+            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case let .failure(error):
+                    self.showErrorAlert = true
+                    self.reason = error.message
+                case .finished:
+                    break
+                }
+                self.isLoading = false
+            }, receiveValue: {
+                self.isLoading = false
+                print("a")
+            })
+            .store(in: &cancellables)
     }
 }
 

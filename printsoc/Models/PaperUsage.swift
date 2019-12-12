@@ -13,18 +13,19 @@ struct PaperUsage {
     let bwPaperQuota: Int
     let colorPaperUsage: Int
     let colorPaperQuota: Int
+}
 
-    // swiftlint:disable force_try
-    private static let regex = try! NSRegularExpression(
-        pattern: "PS-printer paper usage: ([0-9]+) pages.*?Available quota: ([0-9]+) pages.*?" +
-            "Color-PS-printer paper usage: ([0-9]+) pages.*?Available quota: ([0-9]+) pages",
-        options: [.dotMatchesLineSeparators]
-    )
-    // swiftlint:enable force_try
-
+extension PaperUsage {
     init?(pusageOutput: String) {
+        // swiftlint:disable force_try
+        let regex = try! NSRegularExpression(
+            pattern: "PS-printer paper usage: ([0-9]+) pages.*?Available quota: ([0-9]+) pages.*?" +
+                "Color-PS-printer paper usage: ([0-9]+) pages.*?Available quota: ([0-9]+) pages",
+            options: [.dotMatchesLineSeparators]
+        )
+        // swiftlint:enable force_try
         let nsrange = NSRange(pusageOutput.startIndex ..< pusageOutput.endIndex, in: pusageOutput)
-        guard let match = PaperUsage.regex.firstMatch(in: pusageOutput, range: nsrange),
+        guard let match = regex.firstMatch(in: pusageOutput, range: nsrange),
             let bwUsageRange = Range(match.range(at: 1), in: pusageOutput),
             let bwQuotaRange = Range(match.range(at: 2), in: pusageOutput),
             let colorUsageRange = Range(match.range(at: 3), in: pusageOutput),
@@ -40,17 +41,5 @@ struct PaperUsage {
         self.bwPaperQuota = bwPaperQuota
         self.colorPaperUsage = colorPaperUsage
         self.colorPaperQuota = colorPaperQuota
-    }
-
-    static func get(from appState: AppState) -> PaperUsage? {
-        guard let session = appState.authenticate() else {
-            return nil
-        }
-        session.channel.requestPty = true
-        guard let result = session.channel.execute("/usr/local/bin/pusage", error: nil, timeout: 5)
-        else {
-            return nil
-        }
-        return PaperUsage(pusageOutput: result)
     }
 }

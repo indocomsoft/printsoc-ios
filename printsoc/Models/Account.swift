@@ -9,8 +9,10 @@
 import Foundation
 import Locksmith
 
-struct Account: CreateableSecureStorable, ReadableSecureStorable, DeleteableSecureStorable,
+private struct _Account: CreateableSecureStorable, ReadableSecureStorable, DeleteableSecureStorable,
     GenericPasswordSecureStorable {
+    static let dataKey = "password"
+
     let username: String
     let password: String
 
@@ -18,6 +20,24 @@ struct Account: CreateableSecureStorable, ReadableSecureStorable, DeleteableSecu
     var account: String { username }
 
     var data: [String: Any] {
-        [Constants.keychainDataKey: password]
+        [_Account.dataKey: password]
+    }
+
+    static func password(for username: String) -> String? {
+        _Account(username: username, password: "").readFromSecureStore()?.data?[dataKey] as? String
+    }
+}
+
+enum Account {
+    static func save(username: String, password: String) throws {
+        try _Account(username: username, password: password).createInSecureStore()
+    }
+
+    static func delete(username: String) throws {
+        try _Account(username: username, password: "").deleteFromSecureStore()
+    }
+
+    static func password(for username: String) -> String? {
+        _Account.password(for: username)
     }
 }

@@ -13,7 +13,7 @@ struct ContentView: View {
 
     @ViewBuilder
     var body: some View {
-        if state.loggedIn {
+        if state.isLoggedIn {
             Home().environmentObject(state)
         } else {
             Login().environmentObject(state)

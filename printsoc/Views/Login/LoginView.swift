@@ -9,7 +9,7 @@
 import Combine
 import SwiftUI
 
-struct Login: View {
+struct LoginView: View {
     @State private var cancellables = Set<AnyCancellable>()
 
     @EnvironmentObject private var state: AppState
@@ -76,6 +76,6 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+        LoginView()
     }
 }

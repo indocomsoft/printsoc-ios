@@ -69,7 +69,6 @@ struct Login: View {
                 self.isLoading = false
             }, receiveValue: {
                 self.isLoading = false
-                print("a")
             })
             .store(in: &cancellables)
     }

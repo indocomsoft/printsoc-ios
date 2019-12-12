@@ -28,12 +28,7 @@ struct QuotaView: View {
             Text(greeting).padding()
             PrintUsageView(usage: self.usage)
         }
-        .tabItem {
-            HStack {
-                Image(systemName: "house.fill")
-                Text("Home")
-            }
-        }
+        .tabItem { TabLabel(imageSystemName: "house.fill", text: "Home") }
     }
 }
 

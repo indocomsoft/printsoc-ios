@@ -35,6 +35,8 @@
 		C69BDE9923A228EE00BABBAE /* NMSSHTransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9823A228EE00BABBAE /* NMSSHTransportSession.swift */; };
 		C69BDE9B23A22A8F00BABBAE /* TransportSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9A23A22A8F00BABBAE /* TransportSessionError.swift */; };
 		C69BDE9D23A2995B00BABBAE /* QuotaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9C23A2995B00BABBAE /* QuotaView.swift */; };
+		C69BDEA323A29D3E00BABBAE /* PrintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEA223A29D3E00BABBAE /* PrintView.swift */; };
+		C69BDEA723A29E8500BABBAE /* TabLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEA623A29E8500BABBAE /* TabLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		C69BDE9823A228EE00BABBAE /* NMSSHTransportSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMSSHTransportSession.swift; sourceTree = "<group>"; };
 		C69BDE9A23A22A8F00BABBAE /* TransportSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportSessionError.swift; sourceTree = "<group>"; };
 		C69BDE9C23A2995B00BABBAE /* QuotaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotaView.swift; sourceTree = "<group>"; };
+		C69BDEA223A29D3E00BABBAE /* PrintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintView.swift; sourceTree = "<group>"; };
+		C69BDEA623A29E8500BABBAE /* TabLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabel.swift; sourceTree = "<group>"; };
 		D12BFB1D031F14949DC4BC3D /* Pods-printsoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc.release.xcconfig"; path = "Target Support Files/Pods-printsoc/Pods-printsoc.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -229,9 +233,10 @@
 		C692EA272399363D005512DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C69BDEA023A29CB600BABBAE /* Quota */,
-				C69BDE9F23A29CA500BABBAE /* Login */,
 				C69BDE9E23A29C9A00BABBAE /* Common */,
+				C69BDE9F23A29CA500BABBAE /* Login */,
+				C69BDEA023A29CB600BABBAE /* Quota */,
+				C69BDEA123A29D2A00BABBAE /* Print */,
 				C6928F88239A30FD00C4242F /* HomeView.swift */,
 			);
 			path = Views;
@@ -263,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				C6928F84239A234700C4242F /* ActivityIndicator.swift */,
+				C69BDEA623A29E8500BABBAE /* TabLabel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -283,6 +289,14 @@
 				C6928F8E239A577B00C4242F /* PrintUsageSectionView.swift */,
 			);
 			path = Quota;
+			sourceTree = "<group>";
+		};
+		C69BDEA123A29D2A00BABBAE /* Print */ = {
+			isa = PBXGroup;
+			children = (
+				C69BDEA223A29D3E00BABBAE /* PrintView.swift */,
+			);
+			path = Print;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,6 +575,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C69BDE9223A1237C00BABBAE /* TransportConstants.swift in Sources */,
+				C69BDEA323A29D3E00BABBAE /* PrintView.swift in Sources */,
 				C69BDE9623A2265200BABBAE /* TransportSession.swift in Sources */,
 				C69BDE8E23A1213000BABBAE /* TransportError.swift in Sources */,
 				C63522E323994158006C305E /* Account.swift in Sources */,
@@ -579,6 +594,7 @@
 				C6928F8F239A577B00C4242F /* PrintUsageSectionView.swift in Sources */,
 				C63522E523994243006C305E /* AppState.swift in Sources */,
 				C69BDE9423A2244500BABBAE /* Data.swift in Sources */,
+				C69BDEA723A29E8500BABBAE /* TabLabel.swift in Sources */,
 				C69BDE9D23A2995B00BABBAE /* QuotaView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

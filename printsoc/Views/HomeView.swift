@@ -18,6 +18,7 @@ struct HomeView: View {
         NavigationView {
             TabView {
                 QuotaView().environmentObject(state)
+                PrintView()
             }
             .navigationBarItems(trailing:
                 HStack(alignment: VerticalAlignment.center) {

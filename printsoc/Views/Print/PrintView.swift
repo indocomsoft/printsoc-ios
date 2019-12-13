@@ -6,14 +6,66 @@
 //  Copyright © 2019 Julius. All rights reserved.
 //
 
+import Combine
+import MobileCoreServices
+import PDFKit
 import SwiftUI
 
 struct PrintView: View {
-    var body: some View {
-        VStack {
-            Text("Hello, World!")
+    @State var cancellables = Set<AnyCancellable>()
+    @EnvironmentObject var state: AppState
+
+    @State var documentURLs = [URL]()
+    @State var showPicker = false
+
+    private var pdfDocument: PDFDocument? {
+        documentURLs.first.flatMap { url in
+            _ = url.startAccessingSecurityScopedResource()
+            let doc = PDFDocument(url: url)
+            url.stopAccessingSecurityScopedResource()
+            return doc
         }
+    }
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                if pdfDocument == nil {
+                    Text("No PDF opened")
+                } else {
+                    pdfDocument.map { PDFPreview(document: $0) }
+                }
+            }
+            .navigationBarItems(leading: HStack(alignment: .center) {
+                Button(action: { self.showPicker = true }, label: { Text("Open PDF") })
+                    .sheet(isPresented: $showPicker) {
+                        DocumentPicker(documentTypes: [kUTTypePDF as String], mode: .open,
+                                       urls: self.$documentURLs)
+                    }
+
+                if pdfDocument != nil {
+                    Divider()
+                    Button(action: {}, label: { Text("Print") })
+                }
+            }, trailing:
+            HStack(alignment: .center) {
+                Button(action: self.logout, label: {
+                    Text("Log Out")
+                })
+            })
+            .navigationBarTitle(Text(documentURLs.first.map { $0.lastPathComponent } ?? "Print"),
+                                displayMode: .inline)
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
         .tabItem { TabLabel(imageSystemName: "printer.fill", text: "Print") }
+    }
+
+    private func open() {}
+
+    private func logout() {
+        state.deleteAccount()
+            .sink(receiveCompletion: { _ in }, receiveValue: {})
+            .store(in: &cancellables)
     }
 }
 

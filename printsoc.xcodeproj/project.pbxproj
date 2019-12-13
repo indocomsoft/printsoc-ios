@@ -37,6 +37,8 @@
 		C69BDE9D23A2995B00BABBAE /* QuotaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9C23A2995B00BABBAE /* QuotaView.swift */; };
 		C69BDEA323A29D3E00BABBAE /* PrintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEA223A29D3E00BABBAE /* PrintView.swift */; };
 		C69BDEA723A29E8500BABBAE /* TabLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEA623A29E8500BABBAE /* TabLabel.swift */; };
+		C69BDEA923A398C100BABBAE /* PDFPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEA823A398C100BABBAE /* PDFPreview.swift */; };
+		C69BDEAB23A39A9F00BABBAE /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEAA23A39A9F00BABBAE /* DocumentPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +101,8 @@
 		C69BDE9C23A2995B00BABBAE /* QuotaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotaView.swift; sourceTree = "<group>"; };
 		C69BDEA223A29D3E00BABBAE /* PrintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintView.swift; sourceTree = "<group>"; };
 		C69BDEA623A29E8500BABBAE /* TabLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabel.swift; sourceTree = "<group>"; };
+		C69BDEA823A398C100BABBAE /* PDFPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPreview.swift; sourceTree = "<group>"; };
+		C69BDEAA23A39A9F00BABBAE /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
 		D12BFB1D031F14949DC4BC3D /* Pods-printsoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc.release.xcconfig"; path = "Target Support Files/Pods-printsoc/Pods-printsoc.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -269,6 +273,8 @@
 			children = (
 				C6928F84239A234700C4242F /* ActivityIndicator.swift */,
 				C69BDEA623A29E8500BABBAE /* TabLabel.swift */,
+				C69BDEA823A398C100BABBAE /* PDFPreview.swift */,
+				C69BDEAA23A39A9F00BABBAE /* DocumentPicker.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -578,6 +584,7 @@
 				C69BDEA323A29D3E00BABBAE /* PrintView.swift in Sources */,
 				C69BDE9623A2265200BABBAE /* TransportSession.swift in Sources */,
 				C69BDE8E23A1213000BABBAE /* TransportError.swift in Sources */,
+				C69BDEAB23A39A9F00BABBAE /* DocumentPicker.swift in Sources */,
 				C63522E323994158006C305E /* Account.swift in Sources */,
 				C6398DD123992C3F00C836AC /* AppDelegate.swift in Sources */,
 				C69BDE9023A1214600BABBAE /* NMSSHTransport.swift in Sources */,
@@ -586,6 +593,7 @@
 				C6398DD323992C3F00C836AC /* SceneDelegate.swift in Sources */,
 				C6928F8D239A4E7500C4242F /* PrintUsageView.swift in Sources */,
 				C6398DD523992C3F00C836AC /* ContentView.swift in Sources */,
+				C69BDEA923A398C100BABBAE /* PDFPreview.swift in Sources */,
 				C69BDE9B23A22A8F00BABBAE /* TransportSessionError.swift in Sources */,
 				C6928F8B239A353500C4242F /* PaperUsage.swift in Sources */,
 				C63522EA239A15AC006C305E /* Transport.swift in Sources */,

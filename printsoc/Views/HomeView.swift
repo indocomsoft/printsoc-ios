@@ -10,41 +10,13 @@ import Combine
 import SwiftUI
 
 struct HomeView: View {
-    @State var cancellables = Set<AnyCancellable>()
-
     @EnvironmentObject var state: AppState
 
     var body: some View {
-        NavigationView {
-            TabView {
-                QuotaView().environmentObject(state)
-                PrintView()
-            }
-            .navigationBarItems(trailing:
-                HStack(alignment: VerticalAlignment.center) {
-                    Button(action: self.refresh, label: {
-                        Image(uiImage: UIImage(systemName: "arrow.clockwise")!)
-                    })
-                    Divider()
-                    Button(action: self.logout, label: {
-                        Text("Log Out")
-                    })
-            })
+        TabView {
+            QuotaView().environmentObject(state)
+            PrintView().environmentObject(state)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-    }
-
-    private func refresh() {
-        state.update()
-            .sink(receiveCompletion: { _ in },
-                  receiveValue: {})
-            .store(in: &cancellables)
-    }
-
-    private func logout() {
-        state.deleteAccount()
-            .sink(receiveCompletion: { _ in }, receiveValue: {})
-            .store(in: &cancellables)
     }
 }
 

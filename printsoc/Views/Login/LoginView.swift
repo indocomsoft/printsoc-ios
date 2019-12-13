@@ -50,7 +50,8 @@ struct LoginView: View {
             } else {
                 form
             }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 
     private func login() {

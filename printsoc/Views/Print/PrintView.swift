@@ -17,11 +17,18 @@ struct PrintView: View {
 
     @State var documentURLs = [URL]()
     @State var showPicker = false
+    @State var showErrorAlert = false
 
     private var pdfDocument: PDFDocument? {
         documentURLs.first.flatMap { url in
             _ = url.startAccessingSecurityScopedResource()
             let doc = PDFDocument(url: url)
+            DispatchQueue.main.async {
+                if doc == nil {
+                    self.showErrorAlert = true
+                    self.documentURLs = []
+                }
+            }
             url.stopAccessingSecurityScopedResource()
             return doc
         }
@@ -41,6 +48,9 @@ struct PrintView: View {
                     .sheet(isPresented: $showPicker) {
                         DocumentPicker(documentTypes: [kUTTypePDF as String], mode: .open,
                                        urls: self.$documentURLs)
+                    }
+                    .alert(isPresented: $showErrorAlert) {
+                        Alert(title: Text("Error"), message: Text("Unable to load PDF"))
                     }
 
                 if pdfDocument != nil {

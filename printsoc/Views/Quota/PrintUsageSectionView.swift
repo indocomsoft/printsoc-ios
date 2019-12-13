@@ -8,7 +8,10 @@
 
 import SwiftUI
 
-struct PrintUsageSectionView: View {
+struct PrintUsageSectionView: View, Identifiable {
+    // Necessary to prevent preconditionFailure crash
+    var id: String { "\(header)-\(quota)-\(usage)" }
+
     var header: String
     var quota: Int
     var usage: Int

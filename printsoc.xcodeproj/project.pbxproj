@@ -39,6 +39,8 @@
 		C69BDEA723A29E8500BABBAE /* TabLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEA623A29E8500BABBAE /* TabLabel.swift */; };
 		C69BDEA923A398C100BABBAE /* PDFPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEA823A398C100BABBAE /* PDFPreview.swift */; };
 		C69BDEAB23A39A9F00BABBAE /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEAA23A39A9F00BABBAE /* DocumentPicker.swift */; };
+		C6AB598723A7BB9F00FDE0E9 /* PrintSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AB598623A7BB9F00FDE0E9 /* PrintSettingsView.swift */; };
+		C6AB598923A7BC6800FDE0E9 /* PrinterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AB598823A7BC6800FDE0E9 /* PrinterPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +105,8 @@
 		C69BDEA623A29E8500BABBAE /* TabLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabel.swift; sourceTree = "<group>"; };
 		C69BDEA823A398C100BABBAE /* PDFPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPreview.swift; sourceTree = "<group>"; };
 		C69BDEAA23A39A9F00BABBAE /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
+		C6AB598623A7BB9F00FDE0E9 /* PrintSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintSettingsView.swift; sourceTree = "<group>"; };
+		C6AB598823A7BC6800FDE0E9 /* PrinterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterPickerView.swift; sourceTree = "<group>"; };
 		D12BFB1D031F14949DC4BC3D /* Pods-printsoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc.release.xcconfig"; path = "Target Support Files/Pods-printsoc/Pods-printsoc.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -301,6 +305,8 @@
 			isa = PBXGroup;
 			children = (
 				C69BDEA223A29D3E00BABBAE /* PrintView.swift */,
+				C6AB598623A7BB9F00FDE0E9 /* PrintSettingsView.swift */,
+				C6AB598823A7BC6800FDE0E9 /* PrinterPickerView.swift */,
 			);
 			path = Print;
 			sourceTree = "<group>";
@@ -595,11 +601,13 @@
 				C6398DD523992C3F00C836AC /* ContentView.swift in Sources */,
 				C69BDEA923A398C100BABBAE /* PDFPreview.swift in Sources */,
 				C69BDE9B23A22A8F00BABBAE /* TransportSessionError.swift in Sources */,
+				C6AB598923A7BC6800FDE0E9 /* PrinterPickerView.swift in Sources */,
 				C6928F8B239A353500C4242F /* PaperUsage.swift in Sources */,
 				C63522EA239A15AC006C305E /* Transport.swift in Sources */,
 				C692EA2623993631005512DA /* LoginView.swift in Sources */,
 				C6928F85239A234700C4242F /* ActivityIndicator.swift in Sources */,
 				C6928F8F239A577B00C4242F /* PrintUsageSectionView.swift in Sources */,
+				C6AB598723A7BB9F00FDE0E9 /* PrintSettingsView.swift in Sources */,
 				C63522E523994243006C305E /* AppState.swift in Sources */,
 				C69BDE9423A2244500BABBAE /* Data.swift in Sources */,
 				C69BDEA723A29E8500BABBAE /* TabLabel.swift in Sources */,

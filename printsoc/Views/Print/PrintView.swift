@@ -19,6 +19,8 @@ struct PrintView: View {
     @State var showPicker = false
     @State var showErrorAlert = false
 
+    @State var showPrintSettings = false
+
     private var pdfDocument: PDFDocument? {
         documentURLs.first.flatMap { url in
             _ = url.startAccessingSecurityScopedResource()
@@ -55,7 +57,10 @@ struct PrintView: View {
 
                 if pdfDocument != nil {
                     Divider()
-                    Button(action: {}, label: { Text("Print") })
+                    Button(action: { self.showPrintSettings = true }, label: { Text("Print") })
+                        .popover(isPresented: $showPrintSettings) {
+                            PrintSettingsView(showThisView: self.$showPrintSettings)
+                        }
                 }
             }, trailing:
             HStack(alignment: .center) {

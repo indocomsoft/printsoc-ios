@@ -44,7 +44,7 @@ struct PrintView: View {
                 }
             }
             .navigationBarItems(leading: HStack(alignment: .center) {
-                Button(action: { self.showPicker = true }, label: { Text("Open PDF") })
+                Button(action: { self.showPicker = true }, label: { Text("Open") })
                     .sheet(isPresented: $showPicker) {
                         DocumentPicker(documentTypes: [kUTTypePDF as String], mode: .open,
                                        urls: self.$documentURLs)
@@ -70,7 +70,7 @@ struct PrintView: View {
         .tabItem { TabLabel(imageSystemName: "printer.fill", text: "Print") }
     }
 
-    private func open() {}
+    private func print() {}
 
     private func logout() {
         state.deleteAccount()

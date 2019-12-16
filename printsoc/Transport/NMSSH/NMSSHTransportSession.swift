@@ -14,18 +14,20 @@ struct NMSSHTransportSession: TransportSession {
     let session: NMSSHSession
 
     func execute(command: String, requestPty: Bool) -> AnyPublisher<String, TransportSessionError> {
-        Future<String, TransportSessionError> { promise in
-            let channel = self.session.channel
-            channel.requestPty = requestPty
-            var error: NSError?
-            let result = channel.execute(command, error: &error, timeout: 5)
-            if let result = result {
-                return promise(.success(result))
-            } else {
-                return promise(self.handleError(error))
+        Deferred {
+            Future<String, TransportSessionError> { promise in
+                let channel = self.session.channel
+                channel.requestPty = requestPty
+                var error: NSError?
+                let result = channel.execute(command, error: &error, timeout: 5)
+                if let result = result {
+                    return promise(.success(result))
+                } else {
+                    return promise(self.handleError(error))
+                }
             }
+            .subscribe(on: DispatchQueue.global(qos: .userInitiated)) // serialise access to channel
         }
-        .subscribe(on: DispatchQueue.global(qos: .userInitiated))
         .eraseToAnyPublisher()
     }
 

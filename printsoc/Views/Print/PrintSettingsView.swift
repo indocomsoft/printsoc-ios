@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PrintSettingsView: View {
-    @EnvironmentObject var state: AppState
+    @ObservedObject var printer: Printer = .shared
 
     @Binding var showThisView: Bool
 
@@ -21,7 +21,7 @@ struct PrintSettingsView: View {
                 ) {
                     Text("Printer")
                     Spacer()
-                    Text(state.selectedPrinter?.name ?? "Unspecified")
+                    Text(printer.selectedPrinter?.name ?? "Unspecified")
                 }
             }
             .navigationBarTitle(Text("Print Settings"), displayMode: .inline)

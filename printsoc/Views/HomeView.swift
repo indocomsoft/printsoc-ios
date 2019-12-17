@@ -10,8 +10,6 @@ import Combine
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject var state: AppState
-
     var body: some View {
         TabView {
             QuotaView()
@@ -22,6 +20,6 @@ struct HomeView: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView().environmentObject(AppState())
+        HomeView()
     }
 }

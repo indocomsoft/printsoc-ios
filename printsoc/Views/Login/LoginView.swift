@@ -12,7 +12,7 @@ import SwiftUI
 struct LoginView: View {
     @State private var cancellables = Set<AnyCancellable>()
 
-    @EnvironmentObject private var state: AppState
+    @ObservedObject private var account: Account = .shared
 
     @State private var username = ""
     @State private var password = ""
@@ -56,7 +56,7 @@ struct LoginView: View {
 
     private func login() {
         isLoading = true
-        state.storeAccount(username: username, password: password)
+        account.store(username: username, password: password)
             .subscribe(on: DispatchQueue.global(qos: .userInitiated))
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in

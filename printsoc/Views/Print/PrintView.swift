@@ -13,7 +13,8 @@ import SwiftUI
 
 struct PrintView: View {
     @State var cancellables = Set<AnyCancellable>()
-    @EnvironmentObject var state: AppState
+
+    @ObservedObject private var account: Account = .shared
 
     @State var documentURLs = [URL]()
     @State var showPicker = false
@@ -60,7 +61,6 @@ struct PrintView: View {
                     Button(action: { self.showPrintSettings = true }, label: { Text("Print") })
                         .popover(isPresented: $showPrintSettings) {
                             PrintSettingsView(showThisView: self.$showPrintSettings)
-                                .environmentObject(self.state)
                         }
                 }
             }, trailing:
@@ -79,7 +79,7 @@ struct PrintView: View {
     private func print() {}
 
     private func logout() {
-        state.deleteAccount()
+        account.delete()
             .sink(receiveCompletion: { _ in }, receiveValue: {})
             .store(in: &cancellables)
     }

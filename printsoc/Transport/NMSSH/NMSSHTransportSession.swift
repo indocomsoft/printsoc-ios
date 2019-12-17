@@ -37,23 +37,13 @@ struct NMSSHTransportSession: TransportSession {
             .eraseToAnyPublisher()
     }
 
-    func getPaperUsage() -> AnyPublisher<PaperUsage, TransportSessionError> {
+    func getPusageOutput() -> AnyPublisher<String, TransportSessionError> {
         let command = "/usr/local/bin/pusage"
 
         return execute(command: command, requestPty: true)
-            .flatMap { pusageOutput -> AnyPublisher<PaperUsage, TransportSessionError> in
-                guard let pusage = PaperUsage(pusageOutput: pusageOutput) else {
-                    return Fail(error: TransportSessionError.parsingError(command: command))
-                        .eraseToAnyPublisher()
-                }
-                return Just(pusage)
-                    .setFailureType(to: TransportSessionError.self)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
     }
 
-    func getPrinters() -> AnyPublisher<[Printer], TransportSessionError> {
+    func getPrinters() -> AnyPublisher<[Printer.Data], TransportSessionError> {
         let command =
             // Single source of truth for SunOS release 4 (still used by sunfire)
             #"cat /etc/printcap "# +
@@ -70,7 +60,7 @@ struct NMSSHTransportSession: TransportSession {
 
         return execute(command: command, requestPty: false)
             .map { output in
-                output.split(separator: "\n").map { Printer(name: String($0)) }
+                output.split(separator: "\n").map { Printer.Data(name: String($0)) }
             }
             .eraseToAnyPublisher()
     }

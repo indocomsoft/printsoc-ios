@@ -11,14 +11,12 @@ import SwiftUI
 
 struct QuotaView: View {
     @State var cancellables = Set<AnyCancellable>()
-    @EnvironmentObject var state: AppState
 
-    var usage: PaperUsage? {
-        state.data?.usage
-    }
+    @ObservedObject private var account: Account = .shared
+    @ObservedObject private var usage: PaperUsage = .shared
 
     var greeting: String {
-        guard let name = state.data?.fullName else {
+        guard let name = account.fullName else {
             return "Hi!"
         }
         return "Hi \(name)!"
@@ -28,7 +26,7 @@ struct QuotaView: View {
         NavigationView {
             VStack {
                 Text(greeting).padding()
-                PrintUsageView(usage: self.usage)
+                PrintUsageView(data: $usage.data)
             }
             .navigationBarItems(trailing:
                 HStack(alignment: .center) {
@@ -47,14 +45,14 @@ struct QuotaView: View {
     }
 
     private func refresh() {
-        state.update()
+        usage.update()
             .sink(receiveCompletion: { _ in },
                   receiveValue: {})
             .store(in: &cancellables)
     }
 
     private func logout() {
-        state.deleteAccount()
+        account.delete()
             .sink(receiveCompletion: { _ in }, receiveValue: {})
             .store(in: &cancellables)
     }
@@ -63,7 +61,7 @@ struct QuotaView: View {
 struct QuotaView_Previews: PreviewProvider {
     static var previews: some View {
         TabView {
-            QuotaView().environmentObject(AppState())
+            QuotaView()
         }
     }
 }

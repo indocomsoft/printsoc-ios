@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var state: AppState
+    @ObservedObject var account: Account = .shared
 
     @ViewBuilder
     var body: some View {
-        if state.isLoggedIn {
+        if account.isLoggedIn {
             HomeView()
         } else {
             LoginView()
@@ -23,6 +23,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(AppState())
+        ContentView()
     }
 }

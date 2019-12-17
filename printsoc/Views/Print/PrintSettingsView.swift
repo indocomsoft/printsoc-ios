@@ -9,17 +9,19 @@
 import SwiftUI
 
 struct PrintSettingsView: View {
-    @State var printer: String?
+    @EnvironmentObject var state: AppState
 
     @Binding var showThisView: Bool
 
     var body: some View {
         NavigationView {
             Form {
-                NavigationLink(destination: PrinterPickerView()) {
+                NavigationLink(
+                    destination: PrinterPickerView()
+                ) {
                     Text("Printer")
                     Spacer()
-                    Text(printer ?? "Unspecified")
+                    Text(state.selectedPrinter?.name ?? "Unspecified")
                 }
             }
             .navigationBarTitle(Text("Print Settings"), displayMode: .inline)

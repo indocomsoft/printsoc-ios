@@ -15,4 +15,6 @@ protocol TransportSession {
     func getFullName(for username: String) -> AnyPublisher<String, TransportSessionError>
 
     func getPaperUsage() -> AnyPublisher<PaperUsage, TransportSessionError>
+
+    func getPrinters() -> AnyPublisher<[Printer], TransportSessionError>
 }

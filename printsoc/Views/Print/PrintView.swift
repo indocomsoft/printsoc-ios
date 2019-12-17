@@ -60,6 +60,7 @@ struct PrintView: View {
                     Button(action: { self.showPrintSettings = true }, label: { Text("Print") })
                         .popover(isPresented: $showPrintSettings) {
                             PrintSettingsView(showThisView: self.$showPrintSettings)
+                                .environmentObject(self.state)
                         }
                 }
             }, trailing:

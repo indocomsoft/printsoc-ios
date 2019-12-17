@@ -14,8 +14,8 @@ struct HomeView: View {
 
     var body: some View {
         TabView {
-            QuotaView().environmentObject(state)
-            PrintView().environmentObject(state)
+            QuotaView()
+            PrintView()
         }
     }
 }

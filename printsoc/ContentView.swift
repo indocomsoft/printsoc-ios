@@ -14,9 +14,9 @@ struct ContentView: View {
     @ViewBuilder
     var body: some View {
         if state.isLoggedIn {
-            HomeView().environmentObject(state)
+            HomeView()
         } else {
-            LoginView().environmentObject(state)
+            LoginView()
         }
     }
 }

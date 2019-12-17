@@ -3,6 +3,7 @@ line_length:
 identifier_name:
   excluded:
     - id
+    - kv
 included:
   - printsoc
 excluded:

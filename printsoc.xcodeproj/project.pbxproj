@@ -41,6 +41,7 @@
 		C69BDEAB23A39A9F00BABBAE /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDEAA23A39A9F00BABBAE /* DocumentPicker.swift */; };
 		C6AB598723A7BB9F00FDE0E9 /* PrintSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AB598623A7BB9F00FDE0E9 /* PrintSettingsView.swift */; };
 		C6AB598923A7BC6800FDE0E9 /* PrinterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AB598823A7BC6800FDE0E9 /* PrinterPickerView.swift */; };
+		C6AB598B23A7D08B00FDE0E9 /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AB598A23A7D08B00FDE0E9 /* Printer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		C69BDEAA23A39A9F00BABBAE /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
 		C6AB598623A7BB9F00FDE0E9 /* PrintSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintSettingsView.swift; sourceTree = "<group>"; };
 		C6AB598823A7BC6800FDE0E9 /* PrinterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterPickerView.swift; sourceTree = "<group>"; };
+		C6AB598A23A7D08B00FDE0E9 /* Printer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = "<group>"; };
 		D12BFB1D031F14949DC4BC3D /* Pods-printsoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-printsoc.release.xcconfig"; path = "Target Support Files/Pods-printsoc/Pods-printsoc.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +170,7 @@
 				C63522E423994243006C305E /* AppState.swift */,
 				C6928F8A239A353500C4242F /* PaperUsage.swift */,
 				C69BDE9323A2244500BABBAE /* Data.swift */,
+				C6AB598A23A7D08B00FDE0E9 /* Printer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 				C69BDE9223A1237C00BABBAE /* TransportConstants.swift in Sources */,
 				C69BDEA323A29D3E00BABBAE /* PrintView.swift in Sources */,
 				C69BDE9623A2265200BABBAE /* TransportSession.swift in Sources */,
+				C6AB598B23A7D08B00FDE0E9 /* Printer.swift in Sources */,
 				C69BDE8E23A1213000BABBAE /* TransportError.swift in Sources */,
 				C69BDEAB23A39A9F00BABBAE /* DocumentPicker.swift in Sources */,
 				C63522E323994158006C305E /* Account.swift in Sources */,

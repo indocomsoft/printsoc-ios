@@ -53,6 +53,28 @@ struct NMSSHTransportSession: TransportSession {
             .eraseToAnyPublisher()
     }
 
+    func getPrinters() -> AnyPublisher<[Printer], TransportSessionError> {
+        let command =
+            // Single source of truth for SunOS release 4 (still used by sunfire)
+            #"cat /etc/printcap "# +
+        // Remove all instances of backslashes followed by newline
+        #"| perl -pe 's/\\\n//' "# +
+        // Remove all comments
+        #"| gsed -re 's/#.*//g' "# +
+        // Remove all configuration contents (begins with colon)
+        #"| gsed -re 's/:[a-z].*$//' "# +
+        // Remove the colon that comes after the printer names
+        #"| gsed -re 's/:.*$//' "# +
+        // Remove all empty lines
+        #"| gawk NF"#
+
+        return execute(command: command, requestPty: false)
+            .map { output in
+                output.split(separator: "\n").map { Printer(name: String($0)) }
+            }
+            .eraseToAnyPublisher()
+    }
+
     private func handleError(_ error: NSError?) -> Result<String, TransportSessionError> {
         guard let error = error,
             let channelError = NMSSHChannelError(rawValue: error.code)

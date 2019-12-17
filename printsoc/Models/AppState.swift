@@ -30,8 +30,13 @@ enum AppStateError: Error {
 }
 
 final class AppState: ObservableObject {
+    static let shared = AppState()
+
     @Published var isLoggedIn: Bool = false
     @Published var data: Data?
+    @Published var printers: [Printer]
+
+    @Published var selectedPrinter: Printer?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -59,10 +64,40 @@ final class AppState: ObservableObject {
             .eraseToAnyPublisher()
     }
 
-    init() {
+    init(data: Data? = nil, printers: [Printer] = [], selectedPrinter: Printer? = nil) {
+        self.data = data
+        self.printers = printers
+        self.selectedPrinter = selectedPrinter
+
         update()
             .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
             .store(in: &cancellables)
+
+        updatePrinters()
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+            .store(in: &cancellables)
+    }
+
+    func updatePrinters() -> AnyPublisher<Void, AppStateError> {
+        transportSession
+            .flatMap { session in
+                session.getPrinters().mapError { AppStateError.transportSessionError($0) }
+            }
+            .receive(on: DispatchQueue.main)
+            .flatMap { [weak self] result -> AnyPublisher<Void, AppStateError> in
+                guard let self = self else {
+                    return Fail(error: AppStateError.strongReference)
+                        .eraseToAnyPublisher()
+                }
+                self.printers = result
+                if let selectedPrinter = self.selectedPrinter, !result.contains(selectedPrinter) {
+                    self.selectedPrinter = nil
+                }
+                return Just(())
+                    .setFailureType(to: AppStateError.self)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 
     func update() -> AnyPublisher<Void, AppStateError> {

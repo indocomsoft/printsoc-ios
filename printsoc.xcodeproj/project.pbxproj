@@ -30,7 +30,6 @@
 		C69BDE8E23A1213000BABBAE /* TransportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE8D23A1213000BABBAE /* TransportError.swift */; };
 		C69BDE9023A1214600BABBAE /* NMSSHTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE8F23A1214600BABBAE /* NMSSHTransport.swift */; };
 		C69BDE9223A1237C00BABBAE /* TransportConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9123A1237C00BABBAE /* TransportConstants.swift */; };
-		C69BDE9423A2244500BABBAE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9323A2244500BABBAE /* Data.swift */; };
 		C69BDE9623A2265200BABBAE /* TransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9523A2265200BABBAE /* TransportSession.swift */; };
 		C69BDE9923A228EE00BABBAE /* NMSSHTransportSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9823A228EE00BABBAE /* NMSSHTransportSession.swift */; };
 		C69BDE9B23A22A8F00BABBAE /* TransportSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69BDE9A23A22A8F00BABBAE /* TransportSessionError.swift */; };
@@ -97,7 +96,6 @@
 		C69BDE8D23A1213000BABBAE /* TransportError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportError.swift; sourceTree = "<group>"; };
 		C69BDE8F23A1214600BABBAE /* NMSSHTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMSSHTransport.swift; sourceTree = "<group>"; };
 		C69BDE9123A1237C00BABBAE /* TransportConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportConstants.swift; sourceTree = "<group>"; };
-		C69BDE9323A2244500BABBAE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		C69BDE9523A2265200BABBAE /* TransportSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportSession.swift; sourceTree = "<group>"; };
 		C69BDE9823A228EE00BABBAE /* NMSSHTransportSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMSSHTransportSession.swift; sourceTree = "<group>"; };
 		C69BDE9A23A22A8F00BABBAE /* TransportSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportSessionError.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 			children = (
 				C63522E223994158006C305E /* Account.swift */,
 				C6928F8A239A353500C4242F /* PaperUsage.swift */,
-				C69BDE9323A2244500BABBAE /* Data.swift */,
 				C6AB598A23A7D08B00FDE0E9 /* Printer.swift */,
 				C687B4C023A92EA700FDE0E9 /* PrintsocError.swift */,
 			);
@@ -613,7 +610,6 @@
 				C6928F85239A234700C4242F /* ActivityIndicator.swift in Sources */,
 				C6928F8F239A577B00C4242F /* PrintUsageSectionView.swift in Sources */,
 				C6AB598723A7BB9F00FDE0E9 /* PrintSettingsView.swift in Sources */,
-				C69BDE9423A2244500BABBAE /* Data.swift in Sources */,
 				C69BDEA723A29E8500BABBAE /* TabLabel.swift in Sources */,
 				C69BDE9D23A2995B00BABBAE /* QuotaView.swift in Sources */,
 			);

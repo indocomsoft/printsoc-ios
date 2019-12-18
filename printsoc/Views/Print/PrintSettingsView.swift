@@ -16,20 +16,30 @@ struct PrintSettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                NavigationLink(destination: PrinterPickerView()) {
-                    Text("Printer")
-                    Spacer()
-                    Text(printer.selectedPrinter?.name ?? "Unspecified")
+                Section {
+                    NavigationLink(destination: PrinterPickerView()) {
+                        Text("Printer")
+                        Spacer()
+                        Text(printer.selectedPrinter?.name ?? "Unspecified")
+                    }
+                }
+
+                Button(action: self.print) {
+                    Text("Print Document")
                 }
             }
             .navigationBarTitle(Text("Print Settings"), displayMode: .inline)
             .navigationBarItems(trailing: HStack {
                 Button(action: { self.showThisView = false }) {
-                    Text("Done")
+                    Text("Close")
                 }
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    private func print() {
+        // TODO: implement
     }
 }
 

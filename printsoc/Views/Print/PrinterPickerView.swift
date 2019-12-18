@@ -19,6 +19,7 @@ private class _PrinterPickerViewModel: ObservableObject {
         filteredPrinters = initialPrinters
 
         cancellable = $query
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] query in
                 guard let self = self else {
@@ -60,7 +61,7 @@ private struct _PrinterPickerView: View {
                 })
                     .foregroundColor(.primary)
             }
-        }.onAppear {}
+        }
     }
 }
 

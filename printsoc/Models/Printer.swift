@@ -12,12 +12,13 @@ import Foundation
 class Printer: ObservableObject {
     static let shared = Printer()
 
-    @Published var printers: [Data] = []
+    @Published var printers: [Data]
     @Published var selectedPrinter: Data?
 
     private var cancellable: AnyCancellable?
 
-    init() {
+    init(printers: [Data] = []) {
+        self.printers = printers
         cancellable = update().sink(receiveCompletion: { _ in }, receiveValue: {})
     }
 

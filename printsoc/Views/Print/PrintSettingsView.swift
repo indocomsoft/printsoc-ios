@@ -16,9 +16,7 @@ struct PrintSettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                NavigationLink(
-                    destination: PrinterPickerView()
-                ) {
+                NavigationLink(destination: PrinterPickerView()) {
                     Text("Printer")
                     Spacer()
                     Text(printer.selectedPrinter?.name ?? "Unspecified")

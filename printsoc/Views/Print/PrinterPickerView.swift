@@ -6,24 +6,45 @@
 //  Copyright © 2019 Julius. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
-struct PrinterPickerView: View {
-    @State private var query: String = ""
+private class _PrinterPickerViewModel: ObservableObject {
+    @Published var query: String = ""
+    @Published var filteredPrinters: [Printer.Data]
 
+    private var cancellable: AnyCancellable?
+
+    init(printer: Printer = .shared, initialPrinters: [Printer.Data] = []) {
+        filteredPrinters = initialPrinters
+
+        cancellable = $query
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] query in
+                guard let self = self else {
+                    return
+                }
+                if query.isEmpty {
+                    self.filteredPrinters = printer.printers
+                } else {
+                    self.filteredPrinters = printer.printers
+                        .filter { $0.name.lowercased().contains(query.lowercased()) }
+                }
+            }
+    }
+}
+
+private struct _PrinterPickerView: View {
     @ObservedObject var printer: Printer = .shared
 
-    private var filteredPrinters: [Printer.Data] {
-        query.isEmpty ? printer.printers : printer.printers.filter { $0.name.lowercased().contains(query.lowercased())
-        }
-    }
+    @ObservedObject var viewModel: _PrinterPickerViewModel
 
     var body: some View {
         Form {
             Section(footer: Text("Printer with thumbs-up has no user restriction")) {
-                TextField("Filter", text: $query)
+                TextField("Filter", text: $viewModel.query)
             }
-            List(filteredPrinters, id: \.name) { printer in
+            List(viewModel.filteredPrinters, id: \.name) { printer in
                 Button(action: { self.printer.selectedPrinter = printer }, label: {
                     HStack {
                         Image(systemName: "hand.thumbsup.fill")
@@ -43,8 +64,22 @@ struct PrinterPickerView: View {
     }
 }
 
+struct PrinterPickerView: View {
+    // Because we cannot apply @State together with @ObservedObject,
+    // so we need some kind of a "container view" whose task is
+    // just to maintain reference to the viewModel
+    @State private var viewModel: _PrinterPickerViewModel = _PrinterPickerViewModel()
+
+    var body: some View {
+        _PrinterPickerView(viewModel: viewModel)
+    }
+}
+
 struct PrinterPickerView_Previews: PreviewProvider {
+    static let printers = [Printer.Data(name: "psts"), Printer.Data(name: "abcde")]
+
     static var previews: some View {
-        PrinterPickerView()
+        _PrinterPickerView(viewModel: _PrinterPickerViewModel(printer: Printer(printers: printers),
+                                                              initialPrinters: printers))
     }
 }

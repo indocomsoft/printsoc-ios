@@ -24,7 +24,9 @@ struct PrintSettingsView: View {
             }
             .navigationBarTitle(Text("Print Settings"), displayMode: .inline)
             .navigationBarItems(trailing: HStack {
-                Button(action: { self.showThisView = false }, label: { Text("Done") })
+                Button(action: { self.showThisView = false }) {
+                    Text("Done")
+                }
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())

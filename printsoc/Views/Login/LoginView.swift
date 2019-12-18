@@ -26,12 +26,12 @@ struct LoginView: View {
         Form {
             TextField("SoC username", text: self.$username)
             SecureField("Password", text: self.$password)
-            Button(action: self.login, label: {
+            Button(action: self.login) {
                 Text("Log in")
-            })
-                .alert(isPresented: self.$showErrorAlert) {
-                    Alert(title: Text("Error"), message: Text(self.reason))
-                }
+            }
+            .alert(isPresented: self.$showErrorAlert) {
+                Alert(title: Text("Error"), message: Text(self.reason))
+            }
         }
         .navigationBarTitle("Login to Sunfire")
     }

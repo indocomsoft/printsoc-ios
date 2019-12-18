@@ -30,13 +30,13 @@ struct QuotaView: View {
             }
             .navigationBarItems(trailing:
                 HStack(alignment: .center) {
-                    Button(action: self.refresh, label: {
+                    Button(action: self.refresh) {
                         Image(uiImage: UIImage(systemName: "arrow.clockwise")!)
-                    })
+                    }
                     Divider()
-                    Button(action: self.logout, label: {
+                    Button(action: self.logout) {
                         Text("Log Out")
-                    })
+                    }
             })
             .navigationBarTitle(Text("Quota"))
         }

@@ -47,27 +47,31 @@ struct PrintView: View {
                 }
             }
             .navigationBarItems(leading: HStack(alignment: .center) {
-                Button(action: { self.showPicker = true }, label: { Text("Open") })
-                    .sheet(isPresented: $showPicker) {
-                        DocumentPicker(documentTypes: [kUTTypePDF as String], mode: .open,
-                                       urls: self.$documentURLs)
-                    }
-                    .alert(isPresented: $showErrorAlert) {
-                        Alert(title: Text("Error"), message: Text("Unable to load PDF"))
-                    }
+                Button(action: { self.showPicker = true }) {
+                    Text("Open")
+                }
+                .sheet(isPresented: $showPicker) {
+                    DocumentPicker(documentTypes: [kUTTypePDF as String], mode: .open,
+                                   urls: self.$documentURLs)
+                }
+                .alert(isPresented: $showErrorAlert) {
+                    Alert(title: Text("Error"), message: Text("Unable to load PDF"))
+                }
 
                 if pdfDocument != nil {
                     Divider()
-                    Button(action: { self.showPrintSettings = true }, label: { Text("Print") })
-                        .popover(isPresented: $showPrintSettings) {
-                            PrintSettingsView(showThisView: self.$showPrintSettings)
-                        }
+                    Button(action: { self.showPrintSettings = true }) {
+                        Text("Print")
+                    }
+                    .popover(isPresented: $showPrintSettings) {
+                        PrintSettingsView(showThisView: self.$showPrintSettings)
+                    }
                 }
             }, trailing:
             HStack(alignment: .center) {
-                Button(action: self.logout, label: {
+                Button(action: self.logout) {
                     Text("Log Out")
-                })
+                }
             })
             .navigationBarTitle(Text(documentURLs.first.map { $0.lastPathComponent } ?? "Print"),
                                 displayMode: .inline)

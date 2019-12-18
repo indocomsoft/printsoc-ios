@@ -48,7 +48,7 @@ private struct _PrinterPickerView: View {
                 TextField("Filter", text: $viewModel.query)
             }
             List(viewModel.filteredPrinters, id: \.name) { printer in
-                Button(action: { self.printer.selectedPrinter = printer }, label: {
+                Button(action: { self.printer.selectedPrinter = printer }) {
                     HStack {
                         Image(systemName: "hand.thumbsup.fill")
                             .foregroundColor(.blue)
@@ -60,8 +60,8 @@ private struct _PrinterPickerView: View {
                                 .foregroundColor(.green)
                         }
                     }
-                })
-                    .foregroundColor(.primary)
+                }
+                .foregroundColor(.primary)
             }
         }
         .navigationBarTitle(Text("Choose Printers"))

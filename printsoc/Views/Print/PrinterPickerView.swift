@@ -40,6 +40,8 @@ private struct _PrinterPickerView: View {
 
     @ObservedObject var viewModel: _PrinterPickerViewModel
 
+    @State private var cancellables = Set<AnyCancellable>()
+
     var body: some View {
         Form {
             Section(footer: Text("Printer with thumbs-up has no user restriction")) {
@@ -62,6 +64,18 @@ private struct _PrinterPickerView: View {
                     .foregroundColor(.primary)
             }
         }
+        .navigationBarTitle(Text("Choose Printers"))
+        .navigationBarItems(trailing: HStack {
+            Button(action: self.refresh) {
+                Image(uiImage: UIImage(systemName: "arrow.clockwise")!)
+            }
+        })
+    }
+
+    private func refresh() {
+        printer.update()
+            .sink(receiveCompletion: { _ in }, receiveValue: {})
+            .store(in: &cancellables)
     }
 }
 
@@ -80,7 +94,9 @@ struct PrinterPickerView_Previews: PreviewProvider {
     static let printers = [Printer.Data(name: "psts"), Printer.Data(name: "abcde")]
 
     static var previews: some View {
-        _PrinterPickerView(viewModel: _PrinterPickerViewModel(printer: Printer(printers: printers),
-                                                              initialPrinters: printers))
+        NavigationView {
+            _PrinterPickerView(viewModel: _PrinterPickerViewModel(printer: Printer(printers: printers),
+                                                                  initialPrinters: printers))
+        }
     }
 }
